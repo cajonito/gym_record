@@ -1,0 +1,48 @@
+{
+  "name": "atode",
+  "version": "1.0.0",
+  "description": "SlackBotAtode",
+  "main": "build/gas/main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "gulp build",
+    "ts": "ts-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cajonito/gas_practice.git"
+  },
+  "author": "nkigs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cajonito/gas_practice/issues"
+  },
+  "homepage": "https://github.com/cajonito/gas_practice#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@types/jest": "^25.1.2",
+    "babel-preset-gas": "^2.0.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.0",
+    "gulp": "^4.0.2",
+    "gulp-header": "^2.0.9",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.8.4",
+    "@babel/runtime-corejs3": "^7.8.4",
+    "@types/google-apps-script": "^1.0.10",
+    "@types/node": "^13.7.0"
+  }
+}
