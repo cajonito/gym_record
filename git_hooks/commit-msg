@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# https://qiita.com/PallCreaker/items/c91bc201fb8562c8fbd3
+# チケットに関するログが記載されているかのチェック
+exp=".*(#[0-9]+(?:(?:[, &]+| *and *)#[0-9]+)*)"
+grep -E "$exp" $1 > /dev/null
+
+if [ $? -ne 0 ]; then
+    echo 'No Issue Number!'
+    exit 1
+fi

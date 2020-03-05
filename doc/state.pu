@@ -1,0 +1,15 @@
+@startuml
+
+[*] --> onPomodoro: start
+state onPomodoro {
+  [*] --> Focus
+  Focus --> ShortBreak: shortbreak
+  Focus --> LongBreak: longbreak
+  ShortBreak --> Focus: focus
+  LongBreak --> Focus: focus
+}
+
+onPomodoro --> [*]: stop
+
+
+@enduml
