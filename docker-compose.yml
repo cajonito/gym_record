@@ -1,0 +1,21 @@
+version: "3"
+services:
+  compiler:
+    build:
+      context: .
+      dockerfile: Dockerfiles/compiler.Dockerfile
+    volumes:
+      - .:/workdir
+      - /workdir/node_modules
+    working_dir: /workdir
+    command: tail -f /dev/null
+  clasp:
+    build:
+      context: .
+      dockerfile: Dockerfiles/clasp.Dockerfile
+    volumes:
+      - ./.clasprc.json:/root/.clasprc.json
+      - .:/workdir
+      - /workdir/.git #ディレクトリ内にシンボリックリンクがあるとclaspのバグに引っかかるためマウントしないようにする
+    working_dir: /workdir
+    command: tail -f /dev/null
