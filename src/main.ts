@@ -6,16 +6,20 @@ import { Config } from './Config'
 declare var global: any;
 
 global.doPost = function (e: any) {
-	const config: Config = {
-		'channelId': PropertiesService.getScriptProperties().getProperty('SLACK_CHANNEL_ID'),
-		'debugChannelId': PropertiesService.getScriptProperties().getProperty('SLACK_DEBUG_CHANNEL_ID'),
-		'token': PropertiesService.getScriptProperties().getProperty('SLACK_TOKEN'),
-	}
+	try {
+		const config: Config = {
+			'channelId': PropertiesService.getScriptProperties().getProperty('SLACK_CHANNEL_ID'),
+			'debugChannelId': PropertiesService.getScriptProperties().getProperty('SLACK_DEBUG_CHANNEL_ID'),
+			'token': PropertiesService.getScriptProperties().getProperty('SLACK_TOKEN'),
+		}
 
-	const outputApiFactory = new OutputApiFactory();
-	const outputApi = outputApiFactory.create('slack');
-	const slackBot = new SlackBot(new Json(e), outputApi, config);
-	slackBot.run();
+		const outputApiFactory = new OutputApiFactory();
+		const outputApi = outputApiFactory.create('slack');
+		const slackBot = new SlackBot(new Json(e), outputApi, config);
+		slackBot.run();
+	} catch (error) {
+		postByIncomingHook(JSON.stringify(error, null, '    '));
+	}
 };
 
 var postByIncomingHook = (text: string) => {
