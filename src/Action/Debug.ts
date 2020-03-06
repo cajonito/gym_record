@@ -8,21 +8,13 @@ export class Debug extends Action {
 
   match(parameter: Json): boolean {
     if (parameter.get('postData.contents')) {
-      try {
-        const contents = new Json(JSON.parse(parameter.get('postData.contents')));
-        if (contents.get('event.channel') != this.config.channelId) return false;
-        this.data = contents;
-      } catch {
-        return false;
-      }
+      const contents = new Json(JSON.parse(parameter.get('postData.contents')));
+      if (contents.get('event.channel') != this.config.channelId) return false;
+      this.data = contents;
     } else if (parameter.get('parameter.payload')) {
-      try {
-        const payload = new Json(JSON.parse(parameter.get('parameter.payload')));
-        if (payload.get('channel.id') != this.config.channelId) return false;
-        this.data = payload;
-      } catch {
-        return false;
-      }
+      const payload = new Json(JSON.parse(parameter.get('parameter.payload')));
+      if (payload.get('channel.id') != this.config.channelId) return false;
+      this.data = payload;
     } else {
       return false;
     }

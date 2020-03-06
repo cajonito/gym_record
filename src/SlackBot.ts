@@ -22,17 +22,5 @@ export class SlackBot {
         v.do();
       }
     });
-
-    // this.postText(JSON.stringify(this.parameter.object, null, '    '));
-    // const contents = JSON.parse(this.parameter.get('postData.contents'));
-    // this.postText(JSON.stringify(contents, null, '    '));
-  }
-
-  postText(text: String) {
-    this.outputApi.sendMessage(text);
-  }
-
-  postEphemeral(text: String, userId: String) {
-    this.outputApi.sendEphemeral(text, userId);
   }
 }
