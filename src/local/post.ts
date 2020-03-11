@@ -1,7 +1,7 @@
-import { SlackBot } from './SlackBot';
-import { OutputApiFactory } from './OutputApiFactory';
-import { Json } from './Json';
-import { Config } from './Config'
+import { SlackBot } from '../SlackBot';
+import { OutputApiFactory } from '../OutputApiFactory';
+import { Json } from '../Json';
+import { Config } from '../Config'
 
 var main = () => {
   const config: Config = {
