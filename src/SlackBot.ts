@@ -1,6 +1,6 @@
-import { SlackPost } from "./SlackPost";
 import { OutputApi } from "./OutputApi";
 import { Debug } from "./Action/Debug";
+import { Check } from "./Action/Check";
 import { Json } from "./Json";
 import { Config } from "./Config";
 
@@ -15,7 +15,10 @@ export class SlackBot {
   }
 
   run() {
-    const actions = [new Debug(this.outputApi, this.config)];
+    const actions = [
+      new Debug(this.outputApi, this.config),
+      new Check(this.outputApi, this.config)
+    ];
 
     actions.forEach(v => {
       if (v.match(this.parameter)) {
