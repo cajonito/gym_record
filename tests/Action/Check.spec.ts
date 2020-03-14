@@ -2,6 +2,7 @@ import { Check } from '../../src/Action/Check';
 import { Json } from '../../src/Json';
 import { Console } from '../../src/OutputApi/Console'
 import { Config } from '../../src/Config'
+import { Logger } from '../../src/Logger';
 
 const TEST_CHANNEL_ID = 'channel_id';
 const config: Config = {
@@ -10,7 +11,7 @@ const config: Config = {
   'token': null,
 }
 
-const check = new Check(new Console, config);
+const check = new Check(new Console, config, new Logger);
 
 test('match', () => {
   expect(check.match(new Json({
