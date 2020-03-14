@@ -3,6 +3,7 @@ import { Check } from '../Action/Check';
 import { OutputApiFactory } from '../OutputApiFactory';
 import { Json } from '../Json';
 import { Config } from '../Config'
+import { Logger } from '../Logger'
 
 var main = () => {
   const config: Config = {
@@ -14,8 +15,12 @@ var main = () => {
   const outputApiFactory = new OutputApiFactory();
   const outputApiConsole = outputApiFactory.create('consle');
   const e = getTestData();
-  const slackBot = new SlackBot(new Json(e), outputApiConsole, config);
+  const logger = new Logger();
+  // TODO: local共通項をまとめる
+  const slackBot = new SlackBot(new Json(e), outputApiConsole, config, logger);
   slackBot.run();
+
+  console.log(logger.getAll());
 };
 
 var getTestData = () => {

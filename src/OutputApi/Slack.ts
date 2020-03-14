@@ -2,6 +2,7 @@ import { OutputApi } from '../OutputApi'
 import { Json } from '../Json'
 
 export class Slack extends OutputApi {
+  // TODO: 送信先チャンネルを選ぶレイヤーはここじゃない
   sendMessage(text: string) {
     const method = 'post';
     const url = 'https://slack.com/api/chat.postMessage';
@@ -23,8 +24,9 @@ export class Slack extends OutputApi {
         "text": text,
       })
     }
-    UrlFetchApp.fetch(url, options);
-    return;
+
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
   }
 
   sendEphemeral(userId: String, text: String, blocks?: Json) {
@@ -55,7 +57,9 @@ export class Slack extends OutputApi {
       },
       payload: JSON.stringify(payload)
     }
-    UrlFetchApp.fetch(url, options);
-    return;
+
+    this.sendMessage(JSON.stringify(payload, null, '    '));
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
   }
 }

@@ -7,6 +7,7 @@ export class Check extends Action {
   userId: String = '';
 
   match(parameter: Json): boolean {
+    // TODO: triggerって名前変だよね
     if (parameter.get('trigger') != Check.TRIGGER_ID_CHECK) return false;
 
     const userId = parameter.get('user_id')
@@ -45,6 +46,7 @@ export class Check extends Action {
         ]
       }
     ]);
-    this.outputApi.sendEphemeral(this.userId, 'test', blocks);
+    const result = this.outputApi.sendEphemeral(this.userId, 'test', blocks);
+    this.logger.add(result);
   }
 }

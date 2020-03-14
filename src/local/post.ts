@@ -2,6 +2,7 @@ import { SlackBot } from '../SlackBot';
 import { OutputApiFactory } from '../OutputApiFactory';
 import { Json } from '../Json';
 import { Config } from '../Config'
+import { Logger } from '../Logger'
 
 var main = () => {
   const config: Config = {
@@ -13,7 +14,8 @@ var main = () => {
   const outputApiFactory = new OutputApiFactory();
   const outputApiConsole = outputApiFactory.create('consle');
   const e = getTestData();
-  const slackBot = new SlackBot(new Json(e), outputApiConsole, config);
+  const logger = new Logger();
+  const slackBot = new SlackBot(new Json(e), outputApiConsole, config, logger);
   slackBot.run();
 };
 
