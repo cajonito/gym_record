@@ -42,10 +42,9 @@ var main = function (parameter: Json, config: Config) {
 	try {
 		slackBot.run();
 	} catch (err) {
-		postByIncomingHook(JSON.stringify(err, null, '    '));
+		postByIncomingHook(err.name + ': ' + err.message);
+		postByIncomingHook(JSON.stringify(parameter, null, '    '));
 	}
-
-	postByIncomingHook(JSON.stringify(logger.getAll(), null, '    '));
 }
 
 var postByIncomingHook = (text: string) => {

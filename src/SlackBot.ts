@@ -24,8 +24,8 @@ export class SlackBot {
 
   run() {
     const actions = [
-      new Debug(this.outputApi, this.config, this.logger),
-      new Check(this.outputApi, this.config, this.logger)
+      new Check(this.outputApi, this.config, this.logger),
+      new Debug(this.outputApi, this.config, this.logger)
     ];
 
     actions.forEach(v => {
