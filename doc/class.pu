@@ -1,8 +1,10 @@
 @startuml class
 class GAS {
-  + doPost(parameter): void
-  + test(): void
 }
+
+class local {
+}
+
 
 class OutputApiFactory {
   + create(): OutputApi
@@ -25,25 +27,18 @@ class SlackBot {
 
 GAS --> SlackBot
 GAS --> OutputApiFactory
-SlackBot --> OutputApi
+local --> SlackBot
+local --> OutputApiFactory
+SlackBot --> Action
+Action --> OutputApi
 
-class ActionFactory
 abstract Action {
   + match()
   + do()
 }
-class Start
-class Focus
-class ShortBreak
-class LongBreak
-class Stop
 
-ActionFactory --> Action
-Action <|-- Start
-Action <|-- Focus
-Action <|-- ShortBreak
-Action <|-- LongBreak
-Action <|-- Stop
+Action <|-- Debug
+Action <|-- Check
 
 class Json {
   + get()

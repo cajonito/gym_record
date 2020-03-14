@@ -1,6 +1,8 @@
 import { OutputApi } from '../OutputApi'
+import { Json } from '../Json'
 
 export class Slack extends OutputApi {
+  // TODO: 送信先チャンネルを選ぶレイヤーはここじゃない
   sendMessage(text: string) {
     const method = 'post';
     const url = 'https://slack.com/api/chat.postMessage';
@@ -22,11 +24,12 @@ export class Slack extends OutputApi {
         "text": text,
       })
     }
-    UrlFetchApp.fetch(url, options);
-    return;
+
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
   }
 
-  sendEphemeral(text: String, userId: String) {
+  sendEphemeral(userId: String, text: String, blocks?: Json) {
     const method = 'post';
     const url = 'https://slack.com/api/chat.postEphemeral';
     const contentType = 'application/json; charset=utf-8';
@@ -35,37 +38,28 @@ export class Slack extends OutputApi {
 
     if (token == null || channel == null) return;
 
+    let payload: { [key: string]: any } = {
+      "token": token,
+      "channel": channel,
+      "text": text,
+      "user": userId,
+    }
+
+    if (blocks) {
+      payload['blocks'] = blocks.get()
+    };
+
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
       method: method,
       contentType: contentType,
       headers: {
         "Authorization": "Bearer " + token
       },
-      payload: JSON.stringify({
-        "token": token,
-        "channel": channel,
-        "text": text,
-        "user": userId,
-        "blocks": [
-          {
-            "type": "actions",
-            "elements": [
-              {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Button",
-                  "emoji": true
-                },
-                "action_id": "test_button",
-                "value": "click_me_123"
-              }
-            ]
-          }
-        ]
-      })
+      payload: JSON.stringify(payload)
     }
-    UrlFetchApp.fetch(url, options);
-    return;
+
+    this.sendMessage(JSON.stringify(payload, null, '    '));
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
   }
 }
