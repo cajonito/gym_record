@@ -46,7 +46,7 @@ export class Check extends Action {
         ]
       }
     ]);
-    const result = this.outputApi.sendEphemeral(this.userId, 'test', blocks);
+    const result = this.outputApi.sendMessage('test', blocks);
     this.logger.add(result);
   }
 }
