@@ -35,6 +35,7 @@ export class Debug extends Action {
   do() {
     if (!this.isMatched) return;
     if (!this.data) return;
-    const result = this.outputApi.sendMessage(JSON.stringify(this.data, null, '    '));
+    this.outputApi.sendDebugMessage(JSON.stringify(this.data, null, '    '));
+    this.outputApi.sendDebugMessage(JSON.stringify(this.logger.getAll(), null, '    '));
   }
 }
