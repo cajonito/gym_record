@@ -1,7 +1,7 @@
 FROM node:13.7-alpine
 WORKDIR /workdir
-COPY package.json package-lock.json /workdir/
-RUN npm install
+COPY package.json yarn.lock /workdir/
+RUN yarn install
 
 # types/google-apps-scriptの問題への対応
 # 問題箇所を自分でコメントアウトして上書き
