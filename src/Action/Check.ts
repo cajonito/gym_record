@@ -4,6 +4,8 @@ import { Action } from '../Action'
 
 export class Check extends Action {
   static readonly TRIGGER_ID_CHECK: string = 'check';
+  static readonly CHECK_BUTTON_ACTION_ID = 'do_you_go_to_gym';
+  static readonly CHECK_BUTTON_ACTION_VALUE = 'yes';
   userId: String = '';
 
   match(parameter: Json): boolean {
@@ -40,8 +42,8 @@ export class Check extends Action {
               "text": "行った🙌！",
               "emoji": true
             },
-            "action_id": "do_you_go_to_gym",
-            "value": "yes"
+            "action_id": Check.CHECK_BUTTON_ACTION_ID,
+            "value": Check.CHECK_BUTTON_ACTION_VALUE
           }
         ]
       }
