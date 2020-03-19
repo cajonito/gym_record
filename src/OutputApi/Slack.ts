@@ -58,7 +58,34 @@ export class Slack extends OutputApi {
       payload: JSON.stringify(payload)
     }
 
-    this.sendMessage(JSON.stringify(payload, null, '    '));
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
+  }
+
+  deleteMessage(ts: string) {
+    const method = 'post';
+    const url = 'https://slack.com/api/chat.delete';
+    const contentType = 'application/json; charset=utf-8';
+    const token = PropertiesService.getScriptProperties().getProperty('SLACK_TOKEN');
+    const channel = PropertiesService.getScriptProperties().getProperty('SLACK_CHANNEL_ID');
+
+    if (token == null || channel == null) return;
+
+    let payload: { [key: string]: any } = {
+      "token": token,
+      "channel": channel,
+      "ts": ts
+    }
+
+    const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+      method: method,
+      contentType: contentType,
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+      payload: JSON.stringify(payload)
+    }
+
     const result = UrlFetchApp.fetch(url, options);
     return result.getContentText();
   }

@@ -12,4 +12,8 @@ export class Console extends OutputApi {
       this.sendMessage(JSON.stringify(blocks));
     }
   }
+
+  deleteMessage(ts: String) {
+    this.sendMessage('delete => ' + ts);
+  }
 }
