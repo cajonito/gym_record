@@ -10,11 +10,19 @@ export class Debug extends Action {
     if (parameter.get('parameter.payload')) {
       const payload = new Json(JSON.parse(parameter.get('parameter.payload')));
       if (payload.get('channel.id') != this.config.channelId) return false;
-      this.data = payload;
+      this.data = {
+        'parameter': {
+          'payload': payload.get()
+        }
+      };
     } else if (parameter.get('postData.contents')) {
       const contents = new Json(JSON.parse(parameter.get('postData.contents')));
       if (contents.get('event.channel') != this.config.channelId) return false;
-      this.data = contents;
+      this.data = {
+        'postData': {
+          'contents': contents.get()
+        }
+      }
     } else {
       return false;
     }
@@ -27,6 +35,7 @@ export class Debug extends Action {
   do() {
     if (!this.isMatched) return;
     if (!this.data) return;
-    const result = this.outputApi.sendMessage(JSON.stringify(this.data, null, '    '));
+    this.outputApi.sendDebugMessage(JSON.stringify(this.data, null, '    '));
+    this.outputApi.sendDebugMessage(JSON.stringify(this.logger.getAll(), null, '    '));
   }
 }

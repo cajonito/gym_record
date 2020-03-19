@@ -1,9 +1,11 @@
 import { OutputApi } from "./OutputApi";
 import { Debug } from "./Action/Debug";
 import { Check } from "./Action/Check";
+import { GymDone } from "./Action/GymDone"
 import { Json } from "./Json";
 import { Config } from "./Config";
 import { Logger } from "./Logger";
+
 
 export class SlackBot {
   parameter: Json;
@@ -25,6 +27,7 @@ export class SlackBot {
   run() {
     const actions = [
       new Check(this.outputApi, this.config, this.logger),
+      new GymDone(this.outputApi, this.config, this.logger),
       new Debug(this.outputApi, this.config, this.logger)
     ];
 
