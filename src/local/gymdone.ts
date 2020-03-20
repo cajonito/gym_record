@@ -1,6 +1,7 @@
 import { SlackBot } from '../SlackBot';
 import { Check } from '../Action/Check';
 import { OutputApiFactory } from '../OutputApiFactory';
+import { Console } from '../CalendarApi/Console';
 import { Json } from '../Json';
 import { Config } from '../Config'
 import { Logger } from '../Logger'
@@ -16,9 +17,10 @@ var main = () => {
   const logger = new Logger();
   const outputApiFactory = new OutputApiFactory(logger);
   const outputApiConsole = outputApiFactory.create('consle');
+  const calendarApi = new Console(logger);
 
   // TODO: local共通項をまとめる
-  const slackBot = new SlackBot(new Json(e), outputApiConsole, config, logger);
+  const slackBot = new SlackBot(new Json(e), outputApiConsole, calendarApi, config, logger);
   slackBot.run();
 
   console.log(logger.getAll());

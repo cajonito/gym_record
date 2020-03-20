@@ -1,7 +1,8 @@
 import { GymDone } from '../../src/Action/GymDone';
 import { Check } from '../../src/Action/Check';
 import { Json } from '../../src/Json';
-import { Console } from '../../src/OutputApi/Console'
+import { Console as OutputApi_Console } from '../../src/OutputApi/Console';
+import { Console as CalendarApi_Console } from '../../src/CalendarApi/Console';
 import { Config } from '../../src/Config'
 import { Logger } from '../../src/Logger'
 
@@ -13,7 +14,7 @@ const config: Config = {
 }
 
 const logger = new Logger();
-const gymDone = new GymDone(new Console(logger), config, logger);
+const gymDone = new GymDone(new OutputApi_Console(logger), new CalendarApi_Console(logger), config, logger);
 test('match', () => {
   expect(gymDone.match(new Json({
     'parameter': {

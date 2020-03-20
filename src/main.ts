@@ -4,6 +4,7 @@ import { Json } from './Json';
 import { Config } from './Config';
 import { Check } from './Action/Check';
 import { Logger } from './Logger';
+import { Google } from './CalendarApi/Google';
 
 declare var global: any;
 
@@ -38,7 +39,8 @@ var main = function (parameter: Json, config: Config) {
 	const logger = new Logger();
 	const outputApiFactory = new OutputApiFactory(logger);
 	const outputApi = outputApiFactory.create('slack');
-	const slackBot = new SlackBot(parameter, outputApi, config, logger);
+	const calendarApi = new Google(logger);
+	const slackBot = new SlackBot(parameter, outputApi, calendarApi, config, logger);
 	try {
 		slackBot.run();
 	} catch (err) {

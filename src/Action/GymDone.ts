@@ -26,5 +26,6 @@ export class GymDone extends Action {
 
     this.logger.add(this.outputApi.sendMessage('ジムに行った！？えらい！！！🎉'));
     this.logger.add(this.outputApi.deleteMessage(this.messageTs));
+    this.logger.add(this.calendarApi.createAllDayEvent('ジム行った！', new Date()))
   }
 }
