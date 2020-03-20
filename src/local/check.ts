@@ -12,15 +12,17 @@ var main = () => {
     'token': 'token'
   }
 
-  const outputApiFactory = new OutputApiFactory();
-  const outputApiConsole = outputApiFactory.create('consle');
   const e = getTestData();
   const logger = new Logger();
+  const outputApiFactory = new OutputApiFactory(logger);
+  const outputApiConsole = outputApiFactory.create('consle');
+
   // TODO: local共通項をまとめる
   const slackBot = new SlackBot(new Json(e), outputApiConsole, config, logger);
   slackBot.run();
-
-  console.log(logger.getAll());
+  if (logger.hasLogs()) {
+    console.log(logger.getAll());
+  }
 };
 
 var getTestData = () => {

@@ -11,10 +11,11 @@ var main = () => {
     'token': 'token'
   }
 
-  const outputApiFactory = new OutputApiFactory();
-  const outputApiConsole = outputApiFactory.create('consle');
   const e = getTestData();
   const logger = new Logger();
+  const outputApiFactory = new OutputApiFactory(logger);
+  const outputApiConsole = outputApiFactory.create('consle');
+
   const slackBot = new SlackBot(new Json(e), outputApiConsole, config, logger);
   slackBot.run();
 };
