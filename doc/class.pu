@@ -14,12 +14,21 @@ abstract OutputApi {
   + send(text: String): void
 }
 
-class Slack
-class Console
+class OutputApi_Slack
+class OutputApi_Console
 
-OutputApi <|-- Slack
-OutputApi <|-- Console
+OutputApi <|-- OutputApi_Slack
+OutputApi <|-- OutputApi_Console
 OutputApiFactory --> OutputApi
+
+abstract CalendarApi
+class CalendarApi_Google
+class CalendarApi_Console
+
+CalendarApi <|-- CalendarApi_Google
+CalendarApi <|-- CalendarApi_Console
+
+
 
 class SlackBot {
   + run()
@@ -31,6 +40,7 @@ local --> SlackBot
 local --> OutputApiFactory
 SlackBot --> Action
 Action --> OutputApi
+Action --> CalendarApi
 
 abstract Action {
   + match()
@@ -39,6 +49,7 @@ abstract Action {
 
 Action <|-- Debug
 Action <|-- Check
+Action <|-- GymDone
 
 class Json {
   + get()
