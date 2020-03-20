@@ -37,4 +37,18 @@ export class Console extends OutputApi {
       'ts': '1234567890.1234567'
     });
   }
+
+  receiveChatHistory(oldestTimeStamp: String) {
+    return JSON.stringify({
+      'ok': true,
+      'messages': [
+        {
+          'type': 'message'
+        },
+        {
+          'type': 'message2'
+        }
+      ]
+    });
+  }
 }
