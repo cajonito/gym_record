@@ -48,7 +48,24 @@ export class Check extends Action {
         ]
       }
     ]);
-    const result = this.outputApi.sendMessage('test', blocks);
-    this.logger.add(result);
+
+    const sendMessageResponse = new Json(JSON.parse(this.outputApi.sendMessage('test', blocks)));
+    if (!sendMessageResponse.get("ok")) return;
+
+    const nowTs: string = sendMessageResponse.get('ts');
+    const oldestTs = String(Number(nowTs) - 60 * 60 * 24 * 2);
+
+    const chatHistoryResponse = new Json(JSON.parse(this.outputApi.receiveChatHistory(oldestTs)));
+    const oldMessages: any[] = chatHistoryResponse.get('messages');
+
+
+    oldMessages.forEach((v) => {
+      const message = new Json(v);
+      if (message.get('blocks.1.elements.0.action_id') != Check.CHECK_BUTTON_ACTION_ID) return;
+      const ts = message.get('ts');
+      if (ts && ts != nowTs) {
+        const result = this.outputApi.deleteMessage(ts);
+      }
+    })
   }
 }

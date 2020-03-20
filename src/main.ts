@@ -35,15 +35,19 @@ global.dailyNotice = function () {
 }
 
 var main = function (parameter: Json, config: Config) {
-	const outputApiFactory = new OutputApiFactory();
-	const outputApi = outputApiFactory.create('slack');
 	const logger = new Logger();
+	const outputApiFactory = new OutputApiFactory(logger);
+	const outputApi = outputApiFactory.create('slack');
 	const slackBot = new SlackBot(parameter, outputApi, config, logger);
 	try {
 		slackBot.run();
 	} catch (err) {
-		postByIncomingHook(err.name + ': ' + err.message);
+		const errorMessage = err.name + ': ' + err.message;
+		postByIncomingHook(errorMessage);
 		postByIncomingHook(JSON.stringify(parameter, null, '    '));
+	}
+	if (logger.hasLogs()) {
+		postByIncomingHook(JSON.stringify(logger.getAll(), null, '    '));
 	}
 }
 

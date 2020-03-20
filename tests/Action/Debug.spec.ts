@@ -11,7 +11,8 @@ const config: Config = {
   'token': null,
 }
 
-const debug = new Debug(new Console, config, new Logger);
+const logger = new Logger();
+const debug = new Debug(new Console(logger), config, logger);
 test('match', () => {
   expect(debug.match(new Json({
     'parameter': {

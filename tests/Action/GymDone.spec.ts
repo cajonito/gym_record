@@ -12,7 +12,8 @@ const config: Config = {
   'token': null,
 }
 
-const gymDone = new GymDone(new Console, config, new Logger);
+const logger = new Logger();
+const gymDone = new GymDone(new Console(logger), config, logger);
 test('match', () => {
   expect(gymDone.match(new Json({
     'parameter': {

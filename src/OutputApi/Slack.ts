@@ -127,4 +127,32 @@ export class Slack extends OutputApi {
     const result = UrlFetchApp.fetch(url, options);
     return result.getContentText();
   }
+
+  receiveChatHistory(oldestTimeStamp: String) {
+    const method = 'post';
+    const url = 'https://slack.com/api/conversations.history';
+    const contentType = 'application/x-www-form-urlencoded; charset=utf-8';
+    const token = PropertiesService.getScriptProperties().getProperty('SLACK_TOKEN');
+    const channel = PropertiesService.getScriptProperties().getProperty('SLACK_CHANNEL_ID');
+
+    if (token == null || channel == null) return;
+
+    const payload: { [key: string]: any } = {
+      "token": token,
+      "channel": channel,
+      "oldest": oldestTimeStamp
+    }
+
+    const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+      method: method,
+      contentType: contentType,
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+      payload: payload
+    }
+
+    const result = UrlFetchApp.fetch(url, options);
+    return result.getContentText();
+  }
 }
