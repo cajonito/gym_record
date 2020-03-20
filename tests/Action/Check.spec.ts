@@ -1,6 +1,7 @@
 import { Check } from '../../src/Action/Check';
 import { Json } from '../../src/Json';
-import { Console } from '../../src/OutputApi/Console'
+import { Console as OutputApi_Console } from '../../src/OutputApi/Console';
+import { Console as CalendarApi_Console } from '../../src/CalendarApi/Console';
 import { Config } from '../../src/Config'
 import { Logger } from '../../src/Logger';
 
@@ -12,7 +13,7 @@ const config: Config = {
 }
 
 const logger = new Logger();
-const check = new Check(new Console(logger), config, logger);
+const check = new Check(new OutputApi_Console(logger), new CalendarApi_Console(logger), config, logger);
 
 test('match', () => {
   expect(check.match(new Json({

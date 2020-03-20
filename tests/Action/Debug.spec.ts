@@ -1,8 +1,9 @@
 import { Debug } from '../../src/Action/Debug';
 import { Json } from '../../src/Json';
-import { Console } from '../../src/OutputApi/Console'
-import { Config } from '../../src/Config'
-import { Logger } from '../../src/Logger'
+import { Console as OutputApi_Console } from '../../src/OutputApi/Console';
+import { Console as CalendarApi_Console } from '../../src/CalendarApi/Console';
+import { Config } from '../../src/Config';
+import { Logger } from '../../src/Logger';
 
 const TEST_CHANNEL_ID = 'channel_id';
 const config: Config = {
@@ -12,7 +13,7 @@ const config: Config = {
 }
 
 const logger = new Logger();
-const debug = new Debug(new Console(logger), config, logger);
+const debug = new Debug(new OutputApi_Console(logger), new CalendarApi_Console(logger), config, logger);
 test('match', () => {
   expect(debug.match(new Json({
     'parameter': {
